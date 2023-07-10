@@ -1,3 +1,7 @@
+import Vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
+
+const { FaceLandmarker, FilesetResolver, DrawingUtils } = Vision;
+
 const {
     Application,
     live2d: { Live2DModel },
@@ -12,13 +16,13 @@ const {
     Utils: { clamp },
 } = Kalidokit;
 
-// Url to Live2D
-const modelUrl = "../models/hiyori/hiyori_pro_t10.model3.json";
-
-let currentModel, facemesh;
-
 const videoElement = document.querySelector(".input_video"),
     guideCanvas = document.querySelector("canvas.guides");
+
+// Url to Live2D
+const modelUrl = "../models/Mao/Mao.model3.json";
+
+let currentModel, faceLandmarker;
 
 (async function main() {
     // create pixi application
@@ -61,71 +65,47 @@ const videoElement = document.querySelector(".input_video"),
     // add live2d model to stage
     app.stage.addChild(currentModel);
 
-    // create media pipe facemesh instance
-    facemesh = new FaceMesh({
-        locateFile: (file) => {
-            return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
-        },
-    });
+    const filesetResolver = await FilesetResolver.forVisionTasks(
+        // path/to/wasm/root
+        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+    );
 
-    // set facemesh config
-    facemesh.setOptions({
-        maxNumFaces: 1,
-        refineLandmarks: true,
-        minDetectionConfidence: 0.5,
-        minTrackingConfidence: 0.5,
-    });
-
-    // pass facemesh callback function
-    facemesh.onResults(onResults);
+    faceLandmarker = await FaceLandmarker.createFromOptions(
+        filesetResolver,
+        {
+            baseOptions: {
+                modelAssetPath: "app/shared/models/face_landmarker.task",
+                delegate: "GPU",
+            },
+            runningMode: "VIDEO",
+            outputFaceBlendshapes: true,
+            numFaces: 1,
+        }
+    );
 
     startCamera();
 })();
 
 const onResults = (results) => {
-    drawResults(results.multiFaceLandmarks[0]);
-    animateLive2DModel(results.multiFaceLandmarks[0]);
+    animateLive2DModel(results.faceLandmarks[0], results.faceBlendshapes[0]);
 };
 
-// draw connectors and landmarks on output canvas
-const drawResults = (points) => {
-    if (!guideCanvas || !videoElement || !points) return;
-    guideCanvas.width = videoElement.videoWidth;
-    guideCanvas.height = videoElement.videoHeight;
-    let canvasCtx = guideCanvas.getContext("2d");
-    canvasCtx.save();
-    canvasCtx.clearRect(0, 0, guideCanvas.width, guideCanvas.height);
-    // Use `Mediapipe` drawing functions
-    drawConnectors(canvasCtx, points, FACEMESH_TESSELATION, {
-        color: "#C0C0C070",
-        lineWidth: 1,
-    });
-    if (points && points.length === 478) {
-        //draw pupils
-        drawLandmarks(canvasCtx, [points[468], points[468 + 5]], {
-            color: "#ffe603",
-            lineWidth: 2,
-        });
-    }
-};
-
-const animateLive2DModel = (points) => {
-    if (!currentModel || !points) return;
+const animateLive2DModel = (landmarks, blendshapes) => {
+    if (!currentModel || !landmarks) return;
 
     let riggedFace;
 
-    if (points) {
-        // use kalidokit face solver
-        riggedFace = Face.solve(points, {
-            runtime: "mediapipe",
-            video: videoElement,
-        });
-        rigFace(riggedFace, 0.5);
-    }
+    // use kalidokit face solver
+    riggedFace = Face.solve(landmarks, {
+        runtime: "mediapipe",
+        video: videoElement,
+    });
+
+    rigFace(riggedFace, blendshapes.categories, 0.5);
 };
 
 // update live2d model internal state
-const rigFace = (result, lerpAmount = 0.7) => {
+const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
     if (!currentModel || !result) return;
     const coreModel = currentModel.internalModel.coreModel;
 
@@ -185,27 +165,65 @@ const rigFace = (result, lerpAmount = 0.7) => {
         coreModel.setParameterValueById("ParamEyeLOpen", stabilizedEyes.l);
         coreModel.setParameterValueById("ParamEyeROpen", stabilizedEyes.r);
 
+        // // mouth
+        // coreModel.setParameterValueById(
+        //     "ParamMouthOpenY",
+        //     lerp(result.mouth.y, coreModel.getParameterValueById("ParamMouthOpenY"), 0.3)
+        // );
+        // // Adding 0.3 to ParamMouthForm to make default more of a "smile"
+        // coreModel.setParameterValueById(
+        //     "ParamMouthForm",
+        //     0.3 + lerp(result.mouth.x, coreModel.getParameterValueById("ParamMouthForm"), 0.3)
+        // );
+
         // mouth
+
+        // jawOpen
         coreModel.setParameterValueById(
-            "ParamMouthOpenY",
-            lerp(result.mouth.y, coreModel.getParameterValueById("ParamMouthOpenY"), 0.3)
+            "ParamMouthA",
+            // blendshapes[25].score
+            1
         );
-        // Adding 0.3 to ParamMouthForm to make default more of a "smile"
-        coreModel.setParameterValueById(
-            "ParamMouthForm",
-            0.3 + lerp(result.mouth.x, coreModel.getParameterValueById("ParamMouthForm"), 0.3)
-        );
+
+        // // mouthSmileLeft and mounthSmileRight
+        // const mouth_i = (blendshapes[44].score + blendshapes[45].score + blendshapes[48].score + blendshapes[49].score) / 4;
+        // coreModel.setParameterValueById(
+        //     "ParamMouthI",
+        //     mouth_i
+        // );
+
+        // // mouthPucker
+        // coreModel.setParameterValueById(
+        //     "ParamMouthU",
+        //     blendshapes[38].score
+        // );
+
+        // // console.log(coreModel.getParameterValueById("ParamMouthU"))
+
+        // coreModel.setParameterValueById(
+        //     "ParamMouthE",
+        //     (blendshapes[44].score + blendshapes[45].score) / 2
+        // );
+
+        // coreModel.setParameterValueById(
+        //     "ParamMouthO",
+        //     0.5
+        // );
+        // console.log()
     };
 };
 
 // start camera using mediapipe camera utils
 const startCamera = () => {
     const camera = new Camera(videoElement, {
-        onFrame: async () => {
-            await facemesh.send({ image: videoElement });
+        onFrame: () => {
+            let nowInMs = Date.now();
+            const results = faceLandmarker.detectForVideo(videoElement, nowInMs);
+            onResults(results);
         },
         width: 640,
         height: 480,
     });
+
     camera.start();
 };
