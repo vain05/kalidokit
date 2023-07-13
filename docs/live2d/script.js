@@ -161,55 +161,53 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
             },
             result.head.y
         );
+
         // eye blink
         coreModel.setParameterValueById("ParamEyeLOpen", stabilizedEyes.l);
         coreModel.setParameterValueById("ParamEyeROpen", stabilizedEyes.r);
-
-        // // mouth
-        // coreModel.setParameterValueById(
-        //     "ParamMouthOpenY",
-        //     lerp(result.mouth.y, coreModel.getParameterValueById("ParamMouthOpenY"), 0.3)
-        // );
-        // // Adding 0.3 to ParamMouthForm to make default more of a "smile"
-        // coreModel.setParameterValueById(
-        //     "ParamMouthForm",
-        //     0.3 + lerp(result.mouth.x, coreModel.getParameterValueById("ParamMouthForm"), 0.3)
-        // );
-
+       
         // mouth
-
         // jawOpen
+        if (blendshapes[25].score > 0.3) {
+
+            // mouthSmileLeft && mouthSmileRight
+            coreModel.setParameterValueById(
+                "ParamMouthA",
+                (blendshapes[44].score + blendshapes[45].score) / 1.5
+            );
+
+            // mouthUpperUpLeft && mouthUpperUpRight
+            coreModel.setParameterValueById(
+                "ParamMouthE",
+                blendshapes[48].score + blendshapes[49].score / 1.5
+            );
+
+        } else {
+
+            // mouthSmileLeft && mouthSmileRight && mouthUpperUpLeft && mouthUpperUpRight
+            const mouth_i = (blendshapes[44].score + blendshapes[45].score + blendshapes[48].score + blendshapes[49].score) / 3;
+            coreModel.setParameterValueById(
+                "ParamMouthI",
+                mouth_i
+            );
+        }
+
+        // mouthPucker
         coreModel.setParameterValueById(
-            "ParamMouthA",
-            // blendshapes[25].score
-            1
+            "ParamMouthU",
+            blendshapes[38].score
         );
 
-        // // mouthSmileLeft and mounthSmileRight
-        // const mouth_i = (blendshapes[44].score + blendshapes[45].score + blendshapes[48].score + blendshapes[49].score) / 4;
-        // coreModel.setParameterValueById(
-        //     "ParamMouthI",
-        //     mouth_i
-        // );
+        
+        coreModel.setParameterValueById(
+            "ParamBrowLForm",
+            blendshapes[3].score
+        );
 
-        // // mouthPucker
-        // coreModel.setParameterValueById(
-        //     "ParamMouthU",
-        //     blendshapes[38].score
-        // );
-
-        // // console.log(coreModel.getParameterValueById("ParamMouthU"))
-
-        // coreModel.setParameterValueById(
-        //     "ParamMouthE",
-        //     (blendshapes[44].score + blendshapes[45].score) / 2
-        // );
-
-        // coreModel.setParameterValueById(
-        //     "ParamMouthO",
-        //     0.5
-        // );
-        // console.log()
+        coreModel.setParameterValueById(
+            "ParamBrowRForm",
+            blendshapes[3].score
+        );
     };
 };
 
