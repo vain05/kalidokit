@@ -1,0 +1,262 @@
+{
+	"Version": 3,
+	"Parameters": [
+		{
+			"Id": "ParamAngleX",
+			"GroupId": "",
+			"Name": "Angle X"
+		},
+		{
+			"Id": "ParamAngleY",
+			"GroupId": "",
+			"Name": "Angle Y"
+		},
+		{
+			"Id": "ParamAngleZ",
+			"GroupId": "",
+			"Name": "Angle Z"
+		},
+		{
+			"Id": "ParamEyeLOpen",
+			"GroupId": "",
+			"Name": "EyeL Open"
+		},
+		{
+			"Id": "ParamEyeLSmile",
+			"GroupId": "",
+			"Name": "EyeL Smile"
+		},
+		{
+			"Id": "ParamEyeROpen",
+			"GroupId": "",
+			"Name": "EyeR Open"
+		},
+		{
+			"Id": "ParamEyeRSmile",
+			"GroupId": "",
+			"Name": "EyeR Smile"
+		},
+		{
+			"Id": "ParamEyeBallX",
+			"GroupId": "",
+			"Name": "Eyeball X"
+		},
+		{
+			"Id": "ParamEyeBallY",
+			"GroupId": "",
+			"Name": "Eyeball Y"
+		},
+		{
+			"Id": "ParamBrowLY",
+			"GroupId": "",
+			"Name": "BrowL Y"
+		},
+		{
+			"Id": "ParamBrowRY",
+			"GroupId": "",
+			"Name": "BrowR Y"
+		},
+		{
+			"Id": "ParamBrowLX",
+			"GroupId": "",
+			"Name": "BrowL X"
+		},
+		{
+			"Id": "ParamBrowRX",
+			"GroupId": "",
+			"Name": "BrowR X"
+		},
+		{
+			"Id": "ParamBrowLAngle",
+			"GroupId": "",
+			"Name": "BrowL Angle"
+		},
+		{
+			"Id": "ParamBrowRAngle",
+			"GroupId": "",
+			"Name": "BrowR Angle"
+		},
+		{
+			"Id": "ParamBrowLForm",
+			"GroupId": "",
+			"Name": "BrowL Form"
+		},
+		{
+			"Id": "ParamBrowRForm",
+			"GroupId": "",
+			"Name": "BrowR Form"
+		},
+		{
+			"Id": "ParamMouthForm",
+			"GroupId": "",
+			"Name": "Mouth Form"
+		},
+		{
+			"Id": "Param19",
+			"GroupId": "",
+			"Name": "HairDynamic"
+		},
+		{
+			"Id": "ParamMouthOpenY",
+			"GroupId": "",
+			"Name": "Mouth Open"
+		},
+		{
+			"Id": "ParamCheek",
+			"GroupId": "",
+			"Name": "Cheek"
+		},
+		{
+			"Id": "ParamBodyAngleX",
+			"GroupId": "",
+			"Name": "Body X"
+		},
+		{
+			"Id": "ParamBodyAngleY",
+			"GroupId": "",
+			"Name": "Body Y"
+		},
+		{
+			"Id": "ParamBodyAngleZ",
+			"GroupId": "",
+			"Name": "Body Z"
+		},
+		{
+			"Id": "ParamBreath",
+			"GroupId": "",
+			"Name": "Breath"
+		},
+		{
+			"Id": "ParamHairFront",
+			"GroupId": "",
+			"Name": "Hair Move Front"
+		},
+		{
+			"Id": "ParamHairSide",
+			"GroupId": "",
+			"Name": "Hair Move Side"
+		},
+		{
+			"Id": "ParamHairBack",
+			"GroupId": "",
+			"Name": "Hair Move Back"
+		},
+		{
+			"Id": "Param",
+			"GroupId": "",
+			"Name": "browInnerUp"
+		},
+		{
+			"Id": "Param2",
+			"GroupId": "",
+			"Name": "browDownLeft_Right"
+		},
+		{
+			"Id": "Param3",
+			"GroupId": "",
+			"Name": "browOuterUpLeft_Right"
+		},
+		{
+			"Id": "Param4",
+			"GroupId": "",
+			"Name": "eyeLookUp_Down"
+		},
+		{
+			"Id": "Param5",
+			"GroupId": "",
+			"Name": "eyeLookOutLeft_Right"
+		},
+		{
+			"Id": "Param7",
+			"GroupId": "",
+			"Name": "eyeBlinkLeft"
+		},
+		{
+			"Id": "Param6",
+			"GroupId": "",
+			"Name": "eyeBlinkRight"
+		},
+		{
+			"Id": "Param8",
+			"GroupId": "",
+			"Name": "jawOpen"
+		},
+		{
+			"Id": "Param9",
+			"GroupId": "",
+			"Name": "jawLeft_Right"
+		},
+		{
+			"Id": "Param10",
+			"GroupId": "",
+			"Name": "mouthLeft_Right"
+		},
+		{
+			"Id": "Param11",
+			"GroupId": "",
+			"Name": "mouthSmileLeft"
+		},
+		{
+			"Id": "Param12",
+			"GroupId": "",
+			"Name": "mouthSmileRight"
+		},
+		{
+			"Id": "Param13",
+			"GroupId": "",
+			"Name": "mouthUpperUpLeft"
+		},
+		{
+			"Id": "Param14",
+			"GroupId": "",
+			"Name": "mouthUpperUpRight"
+		},
+		{
+			"Id": "Param15",
+			"GroupId": "",
+			"Name": "mouthLowerDownLeft"
+		},
+		{
+			"Id": "Param16",
+			"GroupId": "",
+			"Name": "mouthLowerDownRight"
+		},
+		{
+			"Id": "Param17",
+			"GroupId": "",
+			"Name": "mouthPressLeft"
+		},
+		{
+			"Id": "Param18",
+			"GroupId": "",
+			"Name": "mouthPressRight"
+		}
+	],
+	"ParameterGroups": [
+		{
+			"Id": "ParamGroup",
+			"GroupId": "",
+			"Name": "IphoneTracking"
+		}
+	],
+	"Parts": [
+		{
+			"Id": "Left_Eye",
+			"Name": "Left_Eye"
+		},
+		{
+			"Id": "Right_Eye",
+			"Name": "Right_Eye"
+		}
+	],
+	"CombinedParameters": [
+		[
+			"ParamAngleX",
+			"ParamAngleY"
+		],
+		[
+			"ParamBodyAngleX",
+			"ParamBodyAngleY"
+		]
+	]
+}

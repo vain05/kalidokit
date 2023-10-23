@@ -20,7 +20,7 @@ const videoElement = document.querySelector(".input_video"),
     guideCanvas = document.querySelector("canvas.guides");
 
 // Url to Live2D
-const modelUrl = "../models/Mao/Mao.model3.json";
+const modelUrl = "../models/DemoKit5/DemoKit5.model3.json";
 
 let currentModel, faceLandmarker;
 
@@ -109,7 +109,7 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
     if (!currentModel || !result) return;
     const coreModel = currentModel.internalModel.coreModel;
 
-    currentModel.internalModel.motionManager.update = (...args) => {
+    currentModel.internalModel.motionManager.update = (...args) => {    
         // disable default blink animation
         currentModel.internalModel.eyeBlink = undefined;
 
@@ -161,55 +161,284 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
             },
             result.head.y
         );
-        // eye blink
-        coreModel.setParameterValueById("ParamEyeLOpen", stabilizedEyes.l);
-        coreModel.setParameterValueById("ParamEyeROpen", stabilizedEyes.r);
 
-        // // mouth
-        // coreModel.setParameterValueById(
-        //     "ParamMouthOpenY",
-        //     lerp(result.mouth.y, coreModel.getParameterValueById("ParamMouthOpenY"), 0.3)
-        // );
-        // // Adding 0.3 to ParamMouthForm to make default more of a "smile"
-        // coreModel.setParameterValueById(
-        //     "ParamMouthForm",
-        //     0.3 + lerp(result.mouth.x, coreModel.getParameterValueById("ParamMouthForm"), 0.3)
-        // );
+        // // eye blink
+        // coreModel.setParameterValueById("Param14", stabilizedEyes.l);
+        // coreModel.setParameterValueById("ParamEyeROpen", stabilizedEyes.r);
 
-        // mouth
+        // console.log(blendshapes)
 
-        // jawOpen
-        coreModel.setParameterValueById(
-            "ParamMouthA",
-            // blendshapes[25].score
-            1
-        );
 
-        // // mouthSmileLeft and mounthSmileRight
-        // const mouth_i = (blendshapes[44].score + blendshapes[45].score + blendshapes[48].score + blendshapes[49].score) / 4;
-        // coreModel.setParameterValueById(
-        //     "ParamMouthI",
-        //     mouth_i
-        // );
+//         // brownInnerUp
+//         coreModel.setParameterValueById(
+//             "Param",
+//             blendshapes[3].score
+//         )
 
-        // // mouthPucker
-        // coreModel.setParameterValueById(
-        //     "ParamMouthU",
-        //     blendshapes[38].score
-        // );
+//         // // brownDownLeft
+//         // coreModel.setParameterValueById(
+//         //     "Param2",
+//         //     blendshapes[1].score * 35
+//         // )
 
-        // // console.log(coreModel.getParameterValueById("ParamMouthU"))
 
-        // coreModel.setParameterValueById(
-        //     "ParamMouthE",
-        //     (blendshapes[44].score + blendshapes[45].score) / 2
-        // );
+//         // // brownDownRight
+//         // coreModel.setParameterValueById(
+//         //     "Param3",
+//         //     blendshapes[2].score * 35
+//         // )
 
-        // coreModel.setParameterValueById(
-        //     "ParamMouthO",
-        //     0.5
-        // );
-        // console.log()
+//         if (blendshapes[1].score > blendshapes[2].score)
+//             coreModel.setParameterValueById(
+//                 "Param2",
+//                 blendshapes[1].score
+//             )
+//         else 
+//             coreModel.setParameterValueById(
+//                 "Param2",
+//                 - blendshapes[2].score
+//             )
+        
+//         // // brownOutterUpLeft
+//         // coreModel.setParameterValueById(
+//         //     "Param4",
+//         //     blendshapes[4].score * 35
+//         // )
+
+//         // // brownOutterUpRight
+//         // coreModel.setParameterValueById(
+//         //     "Param5",
+//         //     blendshapes[5].score * 35
+//         // )
+
+//         if (blendshapes[4].score > blendshapes[5].score)
+//             coreModel.setParameterValueById(
+//                 "Param3",
+//                 blendshapes[4].score
+//             )
+//         else 
+//             coreModel.setParameterValueById(
+//                 "Param3",
+//                 - blendshapes[5].score
+//             )
+
+//         // // eyeLookUpLeft
+//         // coreModel.setParameterValueById(
+//         //     "Param6",
+//         //     blendshapes[17].score * 35
+//         // )
+
+//         // // eyeLookUpRight
+//         // coreModel.setParameterValueById(
+//         //     "Param7",
+//         //     blendshapes[18].score * 35
+//         // )
+
+//         // // eyeLookDownLeft
+//         // coreModel.setParameterValueById(
+//         //     "Param8",
+//         //     blendshapes[11].score * 35
+//         // )
+
+//         // // eyeLookDownRight
+//         // coreModel.setParameterValueById(
+//         //     "Param9",
+//         //     blendshapes[12].score * 35
+//         // )
+        
+//         if (blendshapes[17].score > blendshapes[11].score)
+//             coreModel.setParameterValueById(
+//                 "Param4",
+//                 blendshapes[17].score
+//             )
+//         else 
+//             coreModel.setParameterValueById(
+//                 "Param4",
+//                 - blendshapes[11].score
+//             )        
+
+
+//         if (blendshapes[18].score > blendshapes[12].score)
+//             coreModel.setParameterValueById(
+//                 "Param4",
+//                 blendshapes[18].score
+//             )
+//         else 
+//             coreModel.setParameterValueById(
+//                 "Param4",
+//                 - blendshapes[12].score
+//             )
+        
+//         // // eyeLookInLeft
+//         // coreModel.setParameterValueById(
+//         //     "Param10",
+//         //     blendshapes[13].score * 35
+//         // )
+
+//         // // eyeLookInRight
+//         // coreModel.setParameterValueById(
+//         //     "Param11",
+//         //     blendshapes[14].score * 35
+//         // )
+
+//         // // eyeLookOutLeft
+//         // coreModel.setParameterValueById(
+//         //     "Param12",
+//         //     blendshapes[15].score * 35
+//         // )
+
+//         // // eyeLookOutRight
+//         // coreModel.setParameterValueById(
+//         //     "Param13",
+//         //     blendshapes[16].score * 35
+//         // )
+
+//         if (blendshapes[15].score > blendshapes[16].score)
+//             coreModel.setParameterValueById(
+//                 "Param5",
+//                 blendshapes[15].score
+//             )
+//         else 
+//             coreModel.setParameterValueById(
+//                 "Param5",
+//                 - blendshapes[16].score
+//             )
+ 
+//         // eyeBlinkLeft
+//         coreModel.setParameterValueById(
+//             "Param7",
+//             blendshapes[9].score * 1.5
+//         )
+
+//         // eyeBlinkRight
+//         coreModel.setParameterValueById(
+//             "Param6",
+//             blendshapes[10].score * 1.5
+//         )
+
+//         // // eyeSquintLeft
+//         // coreModel.setParameterValueById(
+//         //     "Param16",
+//         //     blendshapes[19].score * 35
+//         // )
+
+//         // // eyeSquintRight
+//         // coreModel.setParameterValueById(
+//         //     "Param17",
+//         //     blendshapes[20].score * 35
+//         // )
+
+//         // jawOpen
+//         coreModel.setParameterValueById(
+//             "Param8",
+//             blendshapes[25].score
+//         )
+
+//         // // jawLeft
+//         // coreModel.setParameterValueById(
+//         //     "Param27",
+//         //     blendshapes[24].score * 35
+//         // )
+
+//         // // jawRight
+//         // coreModel.setParameterValueById(
+//         //     "Param28",
+//         //     blendshapes[26].score * 35
+//         // )
+
+//         if (blendshapes[24].score > blendshapes[26].score)
+//             coreModel.setParameterValueById(
+//                 "Param9",
+//                 blendshapes[24].score
+//             )
+//         else 
+//             coreModel.setParameterValueById(
+//                 "Param9",
+//                 - blendshapes[26].score
+//             )
+
+//         // // mouthFunnel
+//         // coreModel.setParameterValueById(
+//         //     "Param29",
+//         //     blendshapes[32].score * 35
+//         // )
+
+//         // // mouthPucker
+//         // coreModel.setParameterValueById(
+//         //     "Param30",
+//         //     blendshapes[38].score * 35
+//         // )
+
+//         // // mouthLeft
+//         // coreModel.setParameterValueById(
+//         //     "Param31",
+//         //     blendshapes[33].score * 35
+//         // )
+
+//         // // mouthRight
+//         // coreModel.setParameterValueById(
+//         //     "Param32",
+//         //     blendshapes[39].score * 35
+//         // )
+
+//         if (blendshapes[33].score > blendshapes[39].score)
+//             coreModel.setParameterValueById(
+//                 "Param10",
+//                 blendshapes[33].score
+//             )
+//         else 
+//             coreModel.setParameterValueById(
+//                 "Param10",
+//                 - blendshapes[39].score
+//             )
+
+//         // mouthSmileLeft
+//         coreModel.setParameterValueById(
+//             "Param11",
+//             blendshapes[44].score
+//         )
+           
+//         // mouthSmileRight
+//         coreModel.setParameterValueById(
+//             "Param12",
+//             blendshapes[45].score
+//         )
+              
+//         // // mouthDimmpleLeft
+//         // coreModel.setParameterValueById(
+//         //     "Param42",
+//         //     blendshapes[28].score * 35
+//         // )
+       
+//         // // mouthDimmpleRight
+//         // coreModel.setParameterValueById(
+//         //     "Param43",
+//         //     blendshapes[29].score * 35
+//         // )
+
+//         // mouthUpperUpLeft
+//         coreModel.setParameterValueById(
+//             "Param13",
+//             blendshapes[48].score
+//         )
+       
+//         // mouthUpperUpRight
+//         coreModel.setParameterValueById(
+//             "Param14",
+//             blendshapes[49].score
+//         )
+
+//         // mouthLowerDownLeft
+//         coreModel.setParameterValueById(
+//             "Param15",
+//             blendshapes[34].score
+//         )
+       
+//         // mouthLowerDownRight
+//         coreModel.setParameterValueById(
+//             "Param16",
+//             blendshapes[35].score
+//         )
     };
 };
 
