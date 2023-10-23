@@ -55,6 +55,10 @@
   </head>
   <body>
     <div class="preview">
+      <div id="drop_zone" ondrop="dropHandler(event);">
+        <p class="linkOut"> Drag one or more files to this <i>drop zone</i>.</p>
+      </div>
+      <script type="module" src="./script.js" defer></script>
       <video class="input_video" width="1280px" height="720px"></video>
       <canvas class="guides"></canvas>
       <section>
@@ -83,10 +87,5 @@
       </a>
     </nav>
     <canvas id="live2d"></canvas>
-    <p class="linkOut">
-      Visit
-      <a id="full" href="https://kalidoface.com">the full Vtuber App</a>!
-    </p>
-    <script type="module" src="./script.js"></script>
   </body>
 </html>

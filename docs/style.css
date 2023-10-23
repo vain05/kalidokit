@@ -122,3 +122,8 @@ a.current {
         max-width: 160px;
     }
 }
+
+#drop_zone {
+    border: 5px solid blue;
+    height: 100px;
+  }

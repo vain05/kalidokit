@@ -20,9 +20,56 @@ const videoElement = document.querySelector(".input_video"),
     guideCanvas = document.querySelector("canvas.guides");
 
 // Url to Live2D
-const modelUrl = "../models/DemoKit5/DemoKit5.model3.json";
+let modelUrl = "../models/DemoKit5/DemoKit5.model3.json";
 
 let currentModel, faceLandmarker;
+
+function addDirectory(item) {
+    if (item.isDirectory) {
+        var directoryReader = item.createReader();
+        directoryReader.readEntries(function(entries) {
+        entries.forEach(function(entry) {
+                addDirectory(entry);
+            });
+        });
+    } else {
+        item.file(function(file){
+            if (file.name.includes("model3")) {
+                modelUrl = file.name
+                let file_path = URL.createObjectURL(file)
+                console.log(file_path)
+            }
+        });
+    }
+}
+
+function dropHandler(ev) {
+    console.log("File(s) dropped");
+
+    // Prevent default behavior (Prevent file from being opened)
+    ev.preventDefault();
+
+    if (ev.dataTransfer.items) {
+        // Use DataTransferItemList interface to access the file(s)
+        [...ev.dataTransfer.items].forEach((item, i) => {
+            const entry = item.webkitGetAsEntry();
+            console.log(`… file[${i}].name = ${entry.name}`);
+
+            if (entry) {
+                addDirectory(entry);
+            }
+
+        });
+    } else {
+        // Use DataTransfer interface to access the file(s)
+        [...ev.dataTransfer.files].forEach((file, i) => {
+            console.log(`… file[${i}].name = ${file.name}`);
+        });
+    }
+}
+  
+
+window.dropHandler = dropHandler;
 
 (async function main() {
     // create pixi application
@@ -125,16 +172,16 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
         // X and Y axis rotations are swapped for Live2D parameters
         // because it is a 2D system and KalidoKit is a 3D system
         coreModel.setParameterValueById(
-            "ParamAngleX",
-            lerp(result.head.degrees.y, coreModel.getParameterValueById("ParamAngleX"), lerpAmount)
+            "Angl3X",
+            lerp(result.head.degrees.y, coreModel.getParameterValueById("Angl3X"), lerpAmount)
         );
         coreModel.setParameterValueById(
-            "ParamAngleY",
-            lerp(result.head.degrees.x, coreModel.getParameterValueById("ParamAngleY"), lerpAmount)
+            "Angl3Y",
+            lerp(result.head.degrees.x, coreModel.getParameterValueById("Angl3Y"), lerpAmount)
         );
         coreModel.setParameterValueById(
-            "ParamAngleZ",
-            lerp(result.head.degrees.z, coreModel.getParameterValueById("ParamAngleZ"), lerpAmount)
+            "Angl3Z",
+            lerp(result.head.degrees.z, coreModel.getParameterValueById("Angl3Z"), lerpAmount)
         );
 
         // update body params for models without head/body param sync
@@ -166,279 +213,277 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
         // coreModel.setParameterValueById("Param14", stabilizedEyes.l);
         // coreModel.setParameterValueById("ParamEyeROpen", stabilizedEyes.r);
 
-        // console.log(blendshapes)
+
+        // brownInnerUp
+        coreModel.setParameterValueById(
+            "Param",
+            blendshapes[3].score
+        )
+
+        // // brownDownLeft
+        // coreModel.setParameterValueById(
+        //     "Param2",
+        //     blendshapes[1].score * 35
+        // )
 
 
-//         // brownInnerUp
-//         coreModel.setParameterValueById(
-//             "Param",
-//             blendshapes[3].score
-//         )
+        // // brownDownRight
+        // coreModel.setParameterValueById(
+        //     "Param3",
+        //     blendshapes[2].score * 35
+        // )
 
-//         // // brownDownLeft
-//         // coreModel.setParameterValueById(
-//         //     "Param2",
-//         //     blendshapes[1].score * 35
-//         // )
-
-
-//         // // brownDownRight
-//         // coreModel.setParameterValueById(
-//         //     "Param3",
-//         //     blendshapes[2].score * 35
-//         // )
-
-//         if (blendshapes[1].score > blendshapes[2].score)
-//             coreModel.setParameterValueById(
-//                 "Param2",
-//                 blendshapes[1].score
-//             )
-//         else 
-//             coreModel.setParameterValueById(
-//                 "Param2",
-//                 - blendshapes[2].score
-//             )
+        if (blendshapes[1].score > blendshapes[2].score)
+            coreModel.setParameterValueById(
+                "Param2",
+                blendshapes[1].score
+            )
+        else 
+            coreModel.setParameterValueById(
+                "Param2",
+                - blendshapes[2].score
+            )
         
-//         // // brownOutterUpLeft
-//         // coreModel.setParameterValueById(
-//         //     "Param4",
-//         //     blendshapes[4].score * 35
-//         // )
+        // // brownOutterUpLeft
+        // coreModel.setParameterValueById(
+        //     "Param4",
+        //     blendshapes[4].score * 35
+        // )
 
-//         // // brownOutterUpRight
-//         // coreModel.setParameterValueById(
-//         //     "Param5",
-//         //     blendshapes[5].score * 35
-//         // )
+        // // brownOutterUpRight
+        // coreModel.setParameterValueById(
+        //     "Param5",
+        //     blendshapes[5].score * 35
+        // )
 
-//         if (blendshapes[4].score > blendshapes[5].score)
-//             coreModel.setParameterValueById(
-//                 "Param3",
-//                 blendshapes[4].score
-//             )
-//         else 
-//             coreModel.setParameterValueById(
-//                 "Param3",
-//                 - blendshapes[5].score
-//             )
+        if (blendshapes[4].score > blendshapes[5].score)
+            coreModel.setParameterValueById(
+                "Param3",
+                blendshapes[4].score
+            )
+        else 
+            coreModel.setParameterValueById(
+                "Param3",
+                - blendshapes[5].score
+            )
 
-//         // // eyeLookUpLeft
-//         // coreModel.setParameterValueById(
-//         //     "Param6",
-//         //     blendshapes[17].score * 35
-//         // )
+        // // eyeLookUpLeft
+        // coreModel.setParameterValueById(
+        //     "Param6",
+        //     blendshapes[17].score * 35
+        // )
 
-//         // // eyeLookUpRight
-//         // coreModel.setParameterValueById(
-//         //     "Param7",
-//         //     blendshapes[18].score * 35
-//         // )
+        // // eyeLookUpRight
+        // coreModel.setParameterValueById(
+        //     "Param7",
+        //     blendshapes[18].score * 35
+        // )
 
-//         // // eyeLookDownLeft
-//         // coreModel.setParameterValueById(
-//         //     "Param8",
-//         //     blendshapes[11].score * 35
-//         // )
+        // // eyeLookDownLeft
+        // coreModel.setParameterValueById(
+        //     "Param8",
+        //     blendshapes[11].score * 35
+        // )
 
-//         // // eyeLookDownRight
-//         // coreModel.setParameterValueById(
-//         //     "Param9",
-//         //     blendshapes[12].score * 35
-//         // )
+        // // eyeLookDownRight
+        // coreModel.setParameterValueById(
+        //     "Param9",
+        //     blendshapes[12].score * 35
+        // )
         
-//         if (blendshapes[17].score > blendshapes[11].score)
-//             coreModel.setParameterValueById(
-//                 "Param4",
-//                 blendshapes[17].score
-//             )
-//         else 
-//             coreModel.setParameterValueById(
-//                 "Param4",
-//                 - blendshapes[11].score
-//             )        
+        if (blendshapes[17].score > blendshapes[11].score)
+            coreModel.setParameterValueById(
+                "Param4",
+                blendshapes[17].score
+            )
+        else 
+            coreModel.setParameterValueById(
+                "Param4",
+                - blendshapes[11].score
+            )        
 
 
-//         if (blendshapes[18].score > blendshapes[12].score)
-//             coreModel.setParameterValueById(
-//                 "Param4",
-//                 blendshapes[18].score
-//             )
-//         else 
-//             coreModel.setParameterValueById(
-//                 "Param4",
-//                 - blendshapes[12].score
-//             )
+        if (blendshapes[18].score > blendshapes[12].score)
+            coreModel.setParameterValueById(
+                "Param4",
+                blendshapes[18].score
+            )
+        else 
+            coreModel.setParameterValueById(
+                "Param4",
+                - blendshapes[12].score
+            )
         
-//         // // eyeLookInLeft
-//         // coreModel.setParameterValueById(
-//         //     "Param10",
-//         //     blendshapes[13].score * 35
-//         // )
+        // // eyeLookInLeft
+        // coreModel.setParameterValueById(
+        //     "Param10",
+        //     blendshapes[13].score * 35
+        // )
 
-//         // // eyeLookInRight
-//         // coreModel.setParameterValueById(
-//         //     "Param11",
-//         //     blendshapes[14].score * 35
-//         // )
+        // // eyeLookInRight
+        // coreModel.setParameterValueById(
+        //     "Param11",
+        //     blendshapes[14].score * 35
+        // )
 
-//         // // eyeLookOutLeft
-//         // coreModel.setParameterValueById(
-//         //     "Param12",
-//         //     blendshapes[15].score * 35
-//         // )
+        // // eyeLookOutLeft
+        // coreModel.setParameterValueById(
+        //     "Param12",
+        //     blendshapes[15].score * 35
+        // )
 
-//         // // eyeLookOutRight
-//         // coreModel.setParameterValueById(
-//         //     "Param13",
-//         //     blendshapes[16].score * 35
-//         // )
+        // // eyeLookOutRight
+        // coreModel.setParameterValueById(
+        //     "Param13",
+        //     blendshapes[16].score * 35
+        // )
 
-//         if (blendshapes[15].score > blendshapes[16].score)
-//             coreModel.setParameterValueById(
-//                 "Param5",
-//                 blendshapes[15].score
-//             )
-//         else 
-//             coreModel.setParameterValueById(
-//                 "Param5",
-//                 - blendshapes[16].score
-//             )
+        if (blendshapes[15].score > blendshapes[16].score)
+            coreModel.setParameterValueById(
+                "Param5",
+                blendshapes[15].score
+            )
+        else 
+            coreModel.setParameterValueById(
+                "Param5",
+                - blendshapes[16].score
+            )
  
-//         // eyeBlinkLeft
-//         coreModel.setParameterValueById(
-//             "Param7",
-//             blendshapes[9].score * 1.5
-//         )
+        // eyeBlinkLeft
+        coreModel.setParameterValueById(
+            "Param7",
+            blendshapes[9].score * 1.5
+        )
 
-//         // eyeBlinkRight
-//         coreModel.setParameterValueById(
-//             "Param6",
-//             blendshapes[10].score * 1.5
-//         )
+        // eyeBlinkRight
+        coreModel.setParameterValueById(
+            "Param6",
+            blendshapes[10].score * 1.5
+        )
 
-//         // // eyeSquintLeft
-//         // coreModel.setParameterValueById(
-//         //     "Param16",
-//         //     blendshapes[19].score * 35
-//         // )
+        // // eyeSquintLeft
+        // coreModel.setParameterValueById(
+        //     "Param16",
+        //     blendshapes[19].score * 35
+        // )
 
-//         // // eyeSquintRight
-//         // coreModel.setParameterValueById(
-//         //     "Param17",
-//         //     blendshapes[20].score * 35
-//         // )
+        // // eyeSquintRight
+        // coreModel.setParameterValueById(
+        //     "Param17",
+        //     blendshapes[20].score * 35
+        // )
 
-//         // jawOpen
-//         coreModel.setParameterValueById(
-//             "Param8",
-//             blendshapes[25].score
-//         )
+        // jawOpen
+        coreModel.setParameterValueById(
+            "Param8",
+            blendshapes[25].score
+        )
 
-//         // // jawLeft
-//         // coreModel.setParameterValueById(
-//         //     "Param27",
-//         //     blendshapes[24].score * 35
-//         // )
+        // // jawLeft
+        // coreModel.setParameterValueById(
+        //     "Param27",
+        //     blendshapes[24].score * 35
+        // )
 
-//         // // jawRight
-//         // coreModel.setParameterValueById(
-//         //     "Param28",
-//         //     blendshapes[26].score * 35
-//         // )
+        // // jawRight
+        // coreModel.setParameterValueById(
+        //     "Param28",
+        //     blendshapes[26].score * 35
+        // )
 
-//         if (blendshapes[24].score > blendshapes[26].score)
-//             coreModel.setParameterValueById(
-//                 "Param9",
-//                 blendshapes[24].score
-//             )
-//         else 
-//             coreModel.setParameterValueById(
-//                 "Param9",
-//                 - blendshapes[26].score
-//             )
+        if (blendshapes[24].score > blendshapes[26].score)
+            coreModel.setParameterValueById(
+                "Param9",
+                blendshapes[24].score
+            )
+        else 
+            coreModel.setParameterValueById(
+                "Param9",
+                - blendshapes[26].score
+            )
 
-//         // // mouthFunnel
-//         // coreModel.setParameterValueById(
-//         //     "Param29",
-//         //     blendshapes[32].score * 35
-//         // )
+        // // mouthFunnel
+        // coreModel.setParameterValueById(
+        //     "Param29",
+        //     blendshapes[32].score * 35
+        // )
 
-//         // // mouthPucker
-//         // coreModel.setParameterValueById(
-//         //     "Param30",
-//         //     blendshapes[38].score * 35
-//         // )
+        // // mouthPucker
+        // coreModel.setParameterValueById(
+        //     "Param30",
+        //     blendshapes[38].score * 35
+        // )
 
-//         // // mouthLeft
-//         // coreModel.setParameterValueById(
-//         //     "Param31",
-//         //     blendshapes[33].score * 35
-//         // )
+        // // mouthLeft
+        // coreModel.setParameterValueById(
+        //     "Param31",
+        //     blendshapes[33].score * 35
+        // )
 
-//         // // mouthRight
-//         // coreModel.setParameterValueById(
-//         //     "Param32",
-//         //     blendshapes[39].score * 35
-//         // )
+        // // mouthRight
+        // coreModel.setParameterValueById(
+        //     "Param32",
+        //     blendshapes[39].score * 35
+        // )
 
-//         if (blendshapes[33].score > blendshapes[39].score)
-//             coreModel.setParameterValueById(
-//                 "Param10",
-//                 blendshapes[33].score
-//             )
-//         else 
-//             coreModel.setParameterValueById(
-//                 "Param10",
-//                 - blendshapes[39].score
-//             )
+        if (blendshapes[33].score > blendshapes[39].score)
+            coreModel.setParameterValueById(
+                "Param10",
+                blendshapes[33].score
+            )
+        else 
+            coreModel.setParameterValueById(
+                "Param10",
+                - blendshapes[39].score
+            )
 
-//         // mouthSmileLeft
-//         coreModel.setParameterValueById(
-//             "Param11",
-//             blendshapes[44].score
-//         )
+        // mouthSmileLeft
+        coreModel.setParameterValueById(
+            "Param11",
+            blendshapes[44].score
+        )
            
-//         // mouthSmileRight
-//         coreModel.setParameterValueById(
-//             "Param12",
-//             blendshapes[45].score
-//         )
+        // mouthSmileRight
+        coreModel.setParameterValueById(
+            "Param12",
+            blendshapes[45].score
+        )
               
-//         // // mouthDimmpleLeft
-//         // coreModel.setParameterValueById(
-//         //     "Param42",
-//         //     blendshapes[28].score * 35
-//         // )
+        // // mouthDimmpleLeft
+        // coreModel.setParameterValueById(
+        //     "Param42",
+        //     blendshapes[28].score * 35
+        // )
        
-//         // // mouthDimmpleRight
-//         // coreModel.setParameterValueById(
-//         //     "Param43",
-//         //     blendshapes[29].score * 35
-//         // )
+        // // mouthDimmpleRight
+        // coreModel.setParameterValueById(
+        //     "Param43",
+        //     blendshapes[29].score * 35
+        // )
 
-//         // mouthUpperUpLeft
-//         coreModel.setParameterValueById(
-//             "Param13",
-//             blendshapes[48].score
-//         )
+        // mouthUpperUpLeft
+        coreModel.setParameterValueById(
+            "Param13",
+            blendshapes[48].score
+        )
        
-//         // mouthUpperUpRight
-//         coreModel.setParameterValueById(
-//             "Param14",
-//             blendshapes[49].score
-//         )
+        // mouthUpperUpRight
+        coreModel.setParameterValueById(
+            "Param14",
+            blendshapes[49].score
+        )
 
-//         // mouthLowerDownLeft
-//         coreModel.setParameterValueById(
-//             "Param15",
-//             blendshapes[34].score
-//         )
+        // mouthLowerDownLeft
+        coreModel.setParameterValueById(
+            "Param15",
+            blendshapes[34].score
+        )
        
-//         // mouthLowerDownRight
-//         coreModel.setParameterValueById(
-//             "Param16",
-//             blendshapes[35].score
-//         )
+        // mouthLowerDownRight
+        coreModel.setParameterValueById(
+            "Param16",
+            blendshapes[35].score
+        )
     };
 };
 
