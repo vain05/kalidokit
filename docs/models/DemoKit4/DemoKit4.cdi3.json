@@ -2,19 +2,19 @@
 	"Version": 3,
 	"Parameters": [
 		{
-			"Id": "ParamAngleX",
+			"Id": "Angl3X",
 			"GroupId": "",
-			"Name": "Angle X"
+			"Name": "Angl3X"
 		},
 		{
-			"Id": "ParamAngleY",
+			"Id": "Angl3Y",
 			"GroupId": "",
-			"Name": "Angle Y"
+			"Name": "Angl3Y"
 		},
 		{
-			"Id": "ParamAngleZ",
+			"Id": "Angl3Z",
 			"GroupId": "",
-			"Name": "Angle Z"
+			"Name": "Angl3Z"
 		},
 		{
 			"Id": "ParamEyeLOpen",
@@ -248,15 +248,5 @@
 			"Id": "Right_Eye",
 			"Name": "Right_Eye"
 		}
-	],
-	"CombinedParameters": [
-		[
-			"ParamAngleX",
-			"ParamAngleY"
-		],
-		[
-			"ParamBodyAngleX",
-			"ParamBodyAngleY"
-		]
 	]
 }

@@ -20,7 +20,7 @@ const videoElement = document.querySelector(".input_video"),
     guideCanvas = document.querySelector("canvas.guides");
 
 // Url to Live2D
-let modelUrl = "../models/DemoKit5/DemoKit5.model3.json";
+let modelUrl = "../models/DemoKit4/DemoKit4.model3.json";
 
 let currentModel, faceLandmarker;
 
@@ -152,7 +152,7 @@ const animateLive2DModel = (landmarks, blendshapes) => {
 };
 
 // update live2d model internal state
-const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
+const rigFace = (result, blendshapes, lerpAmount = 0.6) => {
     if (!currentModel || !result) return;
     const coreModel = currentModel.internalModel.coreModel;
 
@@ -173,15 +173,15 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
         // because it is a 2D system and KalidoKit is a 3D system
         coreModel.setParameterValueById(
             "Angl3X",
-            lerp(result.head.degrees.y, coreModel.getParameterValueById("Angl3X"), lerpAmount)
+            lerp(result.head.degrees.y / 10, coreModel.getParameterValueById("Angl3X"), lerpAmount)
         );
         coreModel.setParameterValueById(
             "Angl3Y",
-            lerp(result.head.degrees.x, coreModel.getParameterValueById("Angl3Y"), lerpAmount)
+            lerp(result.head.degrees.x / 10, coreModel.getParameterValueById("Angl3Y"), lerpAmount)
         );
         coreModel.setParameterValueById(
             "Angl3Z",
-            lerp(result.head.degrees.z, coreModel.getParameterValueById("Angl3Z"), lerpAmount)
+            lerp(result.head.degrees.z / 10, coreModel.getParameterValueById("Angl3Z"), lerpAmount)
         );
 
         // update body params for models without head/body param sync
