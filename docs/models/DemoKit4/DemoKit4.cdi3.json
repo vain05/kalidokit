@@ -142,92 +142,92 @@
 			"Name": "Hair Move Back"
 		},
 		{
-			"Id": "Param",
+			"Id": "browInnerUp",
 			"GroupId": "",
 			"Name": "browInnerUp"
 		},
 		{
-			"Id": "Param2",
+			"Id": "browDownLeft_Right",
 			"GroupId": "",
 			"Name": "browDownLeft_Right"
 		},
 		{
-			"Id": "Param3",
+			"Id": "browOuterUpLeft_Right",
 			"GroupId": "",
 			"Name": "browOuterUpLeft_Right"
 		},
 		{
-			"Id": "Param4",
+			"Id": "eyeLookUp_Down",
 			"GroupId": "",
 			"Name": "eyeLookUp_Down"
 		},
 		{
-			"Id": "Param5",
+			"Id": "eyeLookOutLeft_Right",
 			"GroupId": "",
 			"Name": "eyeLookOutLeft_Right"
 		},
 		{
-			"Id": "Param7",
+			"Id": "eyeBlinkLeft",
 			"GroupId": "",
 			"Name": "eyeBlinkLeft"
 		},
 		{
-			"Id": "Param6",
+			"Id": "eyeBlinkRight",
 			"GroupId": "",
 			"Name": "eyeBlinkRight"
 		},
 		{
-			"Id": "Param8",
+			"Id": "jawOpen",
 			"GroupId": "",
 			"Name": "jawOpen"
 		},
 		{
-			"Id": "Param9",
+			"Id": "jawLeft_Right",
 			"GroupId": "",
 			"Name": "jawLeft_Right"
 		},
 		{
-			"Id": "Param10",
+			"Id": "mouthLeft_Right",
 			"GroupId": "",
 			"Name": "mouthLeft_Right"
 		},
 		{
-			"Id": "Param11",
+			"Id": "mouthSmileLeft",
 			"GroupId": "",
 			"Name": "mouthSmileLeft"
 		},
 		{
-			"Id": "Param12",
+			"Id": "mouthSmileRight",
 			"GroupId": "",
 			"Name": "mouthSmileRight"
 		},
 		{
-			"Id": "Param13",
+			"Id": "mouthUpperUpLeft",
 			"GroupId": "",
 			"Name": "mouthUpperUpLeft"
 		},
 		{
-			"Id": "Param14",
+			"Id": "mouthUpperUpRight",
 			"GroupId": "",
 			"Name": "mouthUpperUpRight"
 		},
 		{
-			"Id": "Param15",
+			"Id": "mouthLowerDownLeft",
 			"GroupId": "",
 			"Name": "mouthLowerDownLeft"
 		},
 		{
-			"Id": "Param16",
+			"Id": "mouthLowerDownRight",
 			"GroupId": "",
 			"Name": "mouthLowerDownRight"
 		},
 		{
-			"Id": "Param17",
+			"Id": "mouthPressLeft",
 			"GroupId": "",
 			"Name": "mouthPressLeft"
 		},
 		{
-			"Id": "Param18",
+			"Id": "mouthPressRight",
 			"GroupId": "",
 			"Name": "mouthPressRight"
 		}
@@ -248,5 +248,15 @@
 			"Id": "Right_Eye",
 			"Name": "Right_Eye"
 		}
+	],
+	"CombinedParameters": [
+		[
+			"Angl3X",
+			"Angl3Y"
+		],
+		[
+			"ParamBodyAngleX",
+			"ParamBodyAngleY"
+		]
 	]
 }

@@ -152,7 +152,7 @@ const animateLive2DModel = (landmarks, blendshapes) => {
 };
 
 // update live2d model internal state
-const rigFace = (result, blendshapes, lerpAmount = 0.6) => {
+const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
     if (!currentModel || !result) return;
     const coreModel = currentModel.internalModel.coreModel;
 
@@ -181,23 +181,23 @@ const rigFace = (result, blendshapes, lerpAmount = 0.6) => {
         );
         coreModel.setParameterValueById(
             "Angl3Z",
-            lerp(result.head.degrees.z / 10, coreModel.getParameterValueById("Angl3Z"), lerpAmount)
+            lerp(result.head.degrees.z, coreModel.getParameterValueById("Angl3Z"), lerpAmount)
         );
 
         // update body params for models without head/body param sync
-        const dampener = 0.3;
-        coreModel.setParameterValueById(
-            "ParamBodyAngleX",
-            lerp(result.head.degrees.y * dampener, coreModel.getParameterValueById("ParamBodyAngleX"), lerpAmount)
-        );
-        coreModel.setParameterValueById(
-            "ParamBodyAngleY",
-            lerp(result.head.degrees.x * dampener, coreModel.getParameterValueById("ParamBodyAngleY"), lerpAmount)
-        );
-        coreModel.setParameterValueById(
-            "ParamBodyAngleZ",
-            lerp(result.head.degrees.z * dampener, coreModel.getParameterValueById("ParamBodyAngleZ"), lerpAmount)
-        );
+        // const dampener = 0.3;
+        // coreModel.setParameterValueById(
+        //     "ParamBodyAngleX",
+        //     lerp(result.head.degrees.y * dampener * 5, coreModel.getParameterValueById("ParamBodyAngleX"), lerpAmount)
+        // );
+        // coreModel.setParameterValueById(
+        //     "ParamBodyAngleY",
+        //     lerp(result.head.degrees.x * dampener * 5, coreModel.getParameterValueById("ParamBodyAngleY"), lerpAmount)
+        // );
+        // coreModel.setParameterValueById(
+        //     "ParamBodyAngleZ",
+        //     lerp(result.head.degrees.z * dampener * 5, coreModel.getParameterValueById("ParamBodyAngleZ"), lerpAmount)
+        // );
 
         // Simple example without winking.
         // Interpolate based on old blendshape, then stabilize blink with `Kalidokit` helper function.
@@ -213,275 +213,158 @@ const rigFace = (result, blendshapes, lerpAmount = 0.6) => {
         // coreModel.setParameterValueById("Param14", stabilizedEyes.l);
         // coreModel.setParameterValueById("ParamEyeROpen", stabilizedEyes.r);
 
-
-        // brownInnerUp
         coreModel.setParameterValueById(
-            "Param",
+            "bronwInnerUp",
             blendshapes[3].score
         )
 
-        // // brownDownLeft
-        // coreModel.setParameterValueById(
-        //     "Param2",
-        //     blendshapes[1].score * 35
-        // )
-
-
-        // // brownDownRight
-        // coreModel.setParameterValueById(
-        //     "Param3",
-        //     blendshapes[2].score * 35
-        // )
-
         if (blendshapes[1].score > blendshapes[2].score)
             coreModel.setParameterValueById(
-                "Param2",
+                "brownDownLeft_Right",
                 blendshapes[1].score
             )
         else 
             coreModel.setParameterValueById(
-                "Param2",
+                "brownDownLeft_Right",
                 - blendshapes[2].score
             )
         
-        // // brownOutterUpLeft
-        // coreModel.setParameterValueById(
-        //     "Param4",
-        //     blendshapes[4].score * 35
-        // )
-
-        // // brownOutterUpRight
-        // coreModel.setParameterValueById(
-        //     "Param5",
-        //     blendshapes[5].score * 35
-        // )
-
         if (blendshapes[4].score > blendshapes[5].score)
             coreModel.setParameterValueById(
-                "Param3",
+                "browOuterUpLeft_Right",
                 blendshapes[4].score
             )
         else 
             coreModel.setParameterValueById(
-                "Param3",
+                "browOuterUpLeft_Right",
                 - blendshapes[5].score
             )
-
-        // // eyeLookUpLeft
-        // coreModel.setParameterValueById(
-        //     "Param6",
-        //     blendshapes[17].score * 35
-        // )
-
-        // // eyeLookUpRight
-        // coreModel.setParameterValueById(
-        //     "Param7",
-        //     blendshapes[18].score * 35
-        // )
-
-        // // eyeLookDownLeft
-        // coreModel.setParameterValueById(
-        //     "Param8",
-        //     blendshapes[11].score * 35
-        // )
-
-        // // eyeLookDownRight
-        // coreModel.setParameterValueById(
-        //     "Param9",
-        //     blendshapes[12].score * 35
-        // )
-        
+      
         if (blendshapes[17].score > blendshapes[11].score)
             coreModel.setParameterValueById(
-                "Param4",
-                blendshapes[17].score
+                "eyeLookUp_Down",
+                lerp(blendshapes[17].score, 
+                     coreModel.getParameterValueById("eyeLookUp_Down"), 
+                     lerpAmount)
             )
         else 
             coreModel.setParameterValueById(
-                "Param4",
-                - blendshapes[11].score
+                "eyeLookUp_Down",
+                - lerp(blendshapes[11].score, 
+                       - coreModel.getParameterValueById("eyeLookUp_Down"), 
+                       lerpAmount)
             )        
 
 
         if (blendshapes[18].score > blendshapes[12].score)
             coreModel.setParameterValueById(
-                "Param4",
-                blendshapes[18].score
+                "eyeLookUp_Down",
+                lerp(blendshapes[18].score, 
+                     coreModel.getParameterValueById("eyeLookUp_Down"), 
+                     lerpAmount)
             )
         else 
             coreModel.setParameterValueById(
-                "Param4",
-                - blendshapes[12].score
+                "eyeLookUp_Down",
+                - lerp(blendshapes[12].score, 
+                       - coreModel.getParameterValueById("eyeLookUp_Down"), 
+                       lerpAmount)
             )
         
-        // // eyeLookInLeft
-        // coreModel.setParameterValueById(
-        //     "Param10",
-        //     blendshapes[13].score * 35
-        // )
-
-        // // eyeLookInRight
-        // coreModel.setParameterValueById(
-        //     "Param11",
-        //     blendshapes[14].score * 35
-        // )
-
-        // // eyeLookOutLeft
-        // coreModel.setParameterValueById(
-        //     "Param12",
-        //     blendshapes[15].score * 35
-        // )
-
-        // // eyeLookOutRight
-        // coreModel.setParameterValueById(
-        //     "Param13",
-        //     blendshapes[16].score * 35
-        // )
-
         if (blendshapes[15].score > blendshapes[16].score)
             coreModel.setParameterValueById(
-                "Param5",
-                blendshapes[15].score
+                "eyeLookOutLeft_Right",
+                lerp(blendshapes[15].score, 
+                     coreModel.getParameterValueById("eyeLookOutLeft_Right"), 
+                     lerpAmount)
+                
             )
         else 
             coreModel.setParameterValueById(
-                "Param5",
-                - blendshapes[16].score
+                "eyeLookOutLeft_Right",
+                - lerp(blendshapes[16].score, 
+                       - coreModel.getParameterValueById("eyeLookOutLeft_Right"), 
+                       lerpAmount)
             )
  
         // eyeBlinkLeft
         coreModel.setParameterValueById(
-            "Param7",
-            blendshapes[9].score * 1.5
+            "eyeBlinkLeft",       
+            lerp(blendshapes[9].score * 1.5, 
+                 coreModel.getParameterValueById("eyeBlinkLeft"), 
+                 lerpAmount)
         )
 
         // eyeBlinkRight
         coreModel.setParameterValueById(
-            "Param6",
-            blendshapes[10].score * 1.5
+            "eyeBlinkRight",
+            blendshapes[10].score * 1.5,
+            lerp(blendshapes[10].score * 1.5, 
+                 coreModel.getParameterValueById("eyeBlinkRight"), 
+                 lerpAmount)
         )
-
-        // // eyeSquintLeft
-        // coreModel.setParameterValueById(
-        //     "Param16",
-        //     blendshapes[19].score * 35
-        // )
-
-        // // eyeSquintRight
-        // coreModel.setParameterValueById(
-        //     "Param17",
-        //     blendshapes[20].score * 35
-        // )
 
         // jawOpen
         coreModel.setParameterValueById(
-            "Param8",
+            "jawOpen",
             blendshapes[25].score
         )
 
-        // // jawLeft
-        // coreModel.setParameterValueById(
-        //     "Param27",
-        //     blendshapes[24].score * 35
-        // )
-
-        // // jawRight
-        // coreModel.setParameterValueById(
-        //     "Param28",
-        //     blendshapes[26].score * 35
-        // )
-
         if (blendshapes[24].score > blendshapes[26].score)
             coreModel.setParameterValueById(
-                "Param9",
+                "jawLeft_Right",
                 blendshapes[24].score
             )
         else 
             coreModel.setParameterValueById(
-                "Param9",
+                "jawLeft_Right",
                 - blendshapes[26].score
             )
 
-        // // mouthFunnel
-        // coreModel.setParameterValueById(
-        //     "Param29",
-        //     blendshapes[32].score * 35
-        // )
-
-        // // mouthPucker
-        // coreModel.setParameterValueById(
-        //     "Param30",
-        //     blendshapes[38].score * 35
-        // )
-
-        // // mouthLeft
-        // coreModel.setParameterValueById(
-        //     "Param31",
-        //     blendshapes[33].score * 35
-        // )
-
-        // // mouthRight
-        // coreModel.setParameterValueById(
-        //     "Param32",
-        //     blendshapes[39].score * 35
-        // )
-
         if (blendshapes[33].score > blendshapes[39].score)
             coreModel.setParameterValueById(
-                "Param10",
+                "mouthLeft_Right",
                 blendshapes[33].score
             )
         else 
             coreModel.setParameterValueById(
-                "Param10",
+                "mouthLeft_Right",
                 - blendshapes[39].score
             )
 
         // mouthSmileLeft
         coreModel.setParameterValueById(
-            "Param11",
+            "mouthSmileLeft",
             blendshapes[44].score
         )
            
         // mouthSmileRight
         coreModel.setParameterValueById(
-            "Param12",
+            "mouthSmileRight",
             blendshapes[45].score
         )
-              
-        // // mouthDimmpleLeft
-        // coreModel.setParameterValueById(
-        //     "Param42",
-        //     blendshapes[28].score * 35
-        // )
        
-        // // mouthDimmpleRight
-        // coreModel.setParameterValueById(
-        //     "Param43",
-        //     blendshapes[29].score * 35
-        // )
-
         // mouthUpperUpLeft
         coreModel.setParameterValueById(
-            "Param13",
+            "mouthUpperUpLeft",
             blendshapes[48].score
         )
        
         // mouthUpperUpRight
         coreModel.setParameterValueById(
-            "Param14",
+            "mouthUpperUpRight",
             blendshapes[49].score
         )
 
         // mouthLowerDownLeft
         coreModel.setParameterValueById(
-            "Param15",
+            "mouthLowerDownLeft",
             blendshapes[34].score
         )
        
         // mouthLowerDownRight
         coreModel.setParameterValueById(
-            "Param16",
+            "mouthLowerDownRight",
             blendshapes[35].score
         )
     };
