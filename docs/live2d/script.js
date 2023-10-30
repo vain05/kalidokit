@@ -213,32 +213,32 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
         // coreModel.setParameterValueById("Param14", stabilizedEyes.l);
         // coreModel.setParameterValueById("ParamEyeROpen", stabilizedEyes.r);
 
-        coreModel.setParameterValueById(
-            "browInnerUp",
-            blendshapes[3].score
-        )
+        // coreModel.setParameterValueById(
+        //     "browInnerUp",
+        //     blendshapes[3].score
+        // )
 
-        if (blendshapes[1].score > blendshapes[2].score)
-            coreModel.setParameterValueById(
-                "browDownLeft_Right",
-                blendshapes[1].score
-            )
-        else 
-            coreModel.setParameterValueById(
-                "browDownLeft_Right",
-                - blendshapes[2].score
-            )
+        // if (blendshapes[1].score > blendshapes[2].score)
+        //     coreModel.setParameterValueById(
+        //         "browDownLeft_Right",
+        //         blendshapes[1].score
+        //     )
+        // else 
+        //     coreModel.setParameterValueById(
+        //         "browDownLeft_Right",
+        //         - blendshapes[2].score
+        //     )
         
-        if (blendshapes[4].score > blendshapes[5].score)
-            coreModel.setParameterValueById(
-                "browOuterUpLeft_Right",
-                blendshapes[4].score
-            )
-        else 
-            coreModel.setParameterValueById(
-                "browOuterUpLeft_Right",
-                - blendshapes[5].score
-            )
+        // if (blendshapes[4].score > blendshapes[5].score)
+        //     coreModel.setParameterValueById(
+        //         "browOuterUpLeft_Right",
+        //         blendshapes[4].score
+        //     )
+        // else 
+        //     coreModel.setParameterValueById(
+        //         "browOuterUpLeft_Right",
+        //         - blendshapes[5].score
+        //     )
       
         if (blendshapes[17].score > blendshapes[11].score)
             coreModel.setParameterValueById(
@@ -298,7 +298,6 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
         // eyeBlinkRight
         coreModel.setParameterValueById(
             "eyeBlinkRight",
-            blendshapes[10].score * 1.5,
             lerp(blendshapes[10].score * 1.5, 
                  coreModel.getParameterValueById("eyeBlinkRight"), 
                  lerpAmount)
@@ -307,7 +306,7 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
         // jawOpen
         coreModel.setParameterValueById(
             "jawOpen",
-            blendshapes[25].score
+            blendshapes[25].score * 5
         )
 
         if (blendshapes[24].score > blendshapes[26].score)
