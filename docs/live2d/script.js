@@ -20,7 +20,7 @@ const videoElement = document.querySelector(".input_video"),
     guideCanvas = document.querySelector("canvas.guides");
 
 // Url to Live2D
-let modelUrl = "../models/DemoKit4/DemoKit4.model3.json";
+let modelUrl = "../models/meomeo1/meomeo1.model3.json";
 
 let currentModel, faceLandmarker;
 
@@ -181,7 +181,7 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
         );
         coreModel.setParameterValueById(
             "Angl3Z",
-            lerp(result.head.degrees.z, coreModel.getParameterValueById("Angl3Z"), lerpAmount)
+            lerp(result.head.degrees.z / 10, coreModel.getParameterValueById("Angl3Z"), lerpAmount)
         );
 
         // update body params for models without head/body param sync
@@ -214,18 +214,18 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
         // coreModel.setParameterValueById("ParamEyeROpen", stabilizedEyes.r);
 
         coreModel.setParameterValueById(
-            "bronwInnerUp",
+            "browInnerUp",
             blendshapes[3].score
         )
 
         if (blendshapes[1].score > blendshapes[2].score)
             coreModel.setParameterValueById(
-                "brownDownLeft_Right",
+                "browDownLeft_Right",
                 blendshapes[1].score
             )
         else 
             coreModel.setParameterValueById(
-                "brownDownLeft_Right",
+                "browDownLeft_Right",
                 - blendshapes[2].score
             )
         
