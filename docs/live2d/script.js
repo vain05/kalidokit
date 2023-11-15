@@ -20,7 +20,7 @@ const videoElement = document.querySelector(".input_video"),
     guideCanvas = document.querySelector("canvas.guides");
 
 // Url to Live2D
-let modelUrl = "../models/meomeo1/meomeo1.model3.json";
+let modelUrl = "../models/Ducky/ducky momo.model3.json";
 
 let currentModel, faceLandmarker;
 

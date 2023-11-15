@@ -1,0 +1,10 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "ducky momo.moc3",
+		"Textures": [
+			"ducky momo.1024/texture_00.png"
+		],
+		"DisplayInfo": "ducky momo.cdi3.json"
+	}
+}
