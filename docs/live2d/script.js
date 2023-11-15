@@ -274,7 +274,7 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
         if (blendshapes[15].score > blendshapes[16].score)
             coreModel.setParameterValueById(
                 "eyeLookOutLeft_Right",
-                lerp(blendshapes[15].score, 
+                lerp(blendshapes[16].score, 
                      coreModel.getParameterValueById("eyeLookOutLeft_Right"), 
                      lerpAmount)
                 
@@ -282,7 +282,7 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
         else 
             coreModel.setParameterValueById(
                 "eyeLookOutLeft_Right",
-                - lerp(blendshapes[16].score, 
+                - lerp(blendshapes[15].score, 
                        - coreModel.getParameterValueById("eyeLookOutLeft_Right"), 
                        lerpAmount)
             )
@@ -290,7 +290,7 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
         // eyeBlinkLeft
         coreModel.setParameterValueById(
             "eyeBlinkLeft",       
-            lerp(blendshapes[9].score * 1.5, 
+            lerp(blendshapes[10].score * 1.5, 
                  coreModel.getParameterValueById("eyeBlinkLeft"), 
                  lerpAmount)
         )
@@ -298,7 +298,7 @@ const rigFace = (result, blendshapes, lerpAmount = 0.7) => {
         // eyeBlinkRight
         coreModel.setParameterValueById(
             "eyeBlinkRight",
-            lerp(blendshapes[10].score * 1.5, 
+            lerp(blendshapes[9].score * 1.5, 
                  coreModel.getParameterValueById("eyeBlinkRight"), 
                  lerpAmount)
         )
